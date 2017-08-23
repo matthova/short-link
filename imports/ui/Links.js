@@ -1,10 +1,16 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const ButtonToNavigate = ({ title, history }) =>
   (<button type="button" onClick={() => history.push('/')}>
     {title}
   </button>);
+
+ButtonToNavigate.propTypes = {
+  title: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
+};
 
 export default class Links extends React.Component {
   render() {
