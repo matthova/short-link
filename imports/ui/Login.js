@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { NavLink } from 'react-router-dom';
 import autobind from 'react-autobind';
 import { Meteor } from 'meteor/meteor';
@@ -21,6 +23,7 @@ export default class Login extends React.Component {
 
     Meteor.loginWithPassword({ email }, password, (err) => {
       console.log('login callback', err);
+      this.props.history.push('/');
     });
   }
 
@@ -58,3 +61,7 @@ export default class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: ReactRouterPropTypes.history.isRequired,
+};

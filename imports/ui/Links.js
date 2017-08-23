@@ -1,24 +1,31 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
-const ButtonToNavigate = ({ title, history }) =>
-  (<button type="button" onClick={() => history.push('/')}>
-    {title}
-  </button>);
-
-ButtonToNavigate.propTypes = {
-  title: PropTypes.string.isRequired,
-  history: PropTypes.object.isRequired,
-};
+import ReactRouterPropTypes from 'react-router-prop-types';
+import { Accounts } from 'meteor/accounts-base';
+import autobind from 'react-autobind';
 
 export default class Links extends React.Component {
+  constructor(props) {
+    super(props);
+
+    autobind(this);
+  }
+
+  onLogout() {
+    Accounts.logout(() => {
+      this.props.history.push('/');
+    });
+  }
+
   render() {
     return (
       <div>
         <p>Links</p>
-        <Route render={props => <ButtonToNavigate {...props} title="Go back home" />} />
+        <button onClick={this.onLogout}>Logout</button>
       </div>
     );
   }
 }
+
+Links.propTypes = {
+  history: ReactRouterPropTypes.history.isRequired,
+};
