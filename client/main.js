@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createHistory from 'history/createBrowserHistory';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { Tracker } from 'meteor/tracker';
 
@@ -24,12 +24,29 @@ const ChangeTracker = withRouter(({ match, location, history }) => {
   if (isAuthenticated && isUnauthenticatedPage) {
     // Note, pushing history while rendering a component will force
     // an error, since you are updating the state mid-render
-    history.push('/links');
+    return <Redirect to={{ pathname: '/links' }} />;
   } else if (!isAuthenticated && isAuthenticatedPage) {
-    history.push('/');
+    return <Redirect to={{ pathname: '/' }} />;
   }
   return null;
 });
+
+class AuthenticatedRoute extends React.Component {
+  render() {
+    const isAuthenticated = !!Meteor.userId();
+    const { component: Component, ...rest } = this.props;
+
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          isAuthenticated
+            ? <Component {...props} />
+            : <Redirect to={{ pathname: '/', state: { from: props.location } }} />}
+      />
+    );
+  }
+}
 
 const routes = (
   <Router history={browserHistory}>
@@ -37,7 +54,7 @@ const routes = (
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/signup" component={Signup} />
-        <Route path="/links" component={Links} />
+        <AuthenticatedRoute path="/links" component={Links} />
         <Route component={NotFound} />
       </Switch>
       <ChangeTracker />
