@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import autobind from 'react-autobind';
 import { Accounts } from 'meteor/accounts-base';
 
@@ -8,6 +8,7 @@ export default class Signup extends React.Component {
     super(props);
     this.state = {
       error: '',
+      signupSuccess: false,
     };
 
     autobind(this);
@@ -17,14 +18,25 @@ export default class Signup extends React.Component {
     e.preventDefault();
 
     const email = this.email.value.trim();
-    const password = this.email.value.trim();
+    const password = this.password.value.trim();
 
     Accounts.createUser({ email, password }, (err) => {
-      console.log('signup callback', err);
+      if (err) {
+        this.setState({ error: err.reason });
+      } else {
+        this.setState({ error: '', signupSuccess: true });
+      }
     });
   }
 
   render() {
+    console.log('rendering signup');
+
+    if (this.state.signupSuccess) {
+      console.log('redirect');
+      return <Redirect to="/links" />;
+    }
+
     return (
       <div>
         <p>Join Short Link</p>
