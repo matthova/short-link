@@ -21,12 +21,11 @@ const ChangeTracker = withRouter(({ match, location, history }) => {
   const isUnauthenticatedPage = unauthenticatedPages.includes(location.pathname);
   const isAuthenticatedPage = authenticatedPages.includes(location.pathname);
 
-  if (isAuthenticated && isUnauthenticatedPage) {
-    // Note, pushing history while rendering a component will force
-    // an error, since you are updating the state mid-render
-    return <Redirect to={{ pathname: '/links' }} />;
-  } else if (!isAuthenticated && isAuthenticatedPage) {
+  if (!isAuthenticated && isAuthenticatedPage) {
     return <Redirect to={{ pathname: '/' }} />;
+  } else if (isAuthenticated && isUnauthenticatedPage) {
+    // Routing users to the fun pages with the content. don't need to sign up or log in, if they're already logged in
+    return <Redirect to={{ pathname: '/links' }} />;
   }
   return null;
 });

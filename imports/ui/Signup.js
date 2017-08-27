@@ -30,8 +30,6 @@ export default class Signup extends React.Component {
   }
 
   render() {
-    console.log('rendering signup');
-
     if (this.state.signupSuccess) {
       console.log('redirect');
       return <Redirect to="/links" />;
