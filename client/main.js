@@ -1,66 +1,37 @@
 /* global document */
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import createHistory from 'history/createBrowserHistory';
-import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { withRouter } from 'react-router';
-import { Tracker } from 'meteor/tracker';
+import { render } from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
 
+import Routes from '../imports/routes/routes';
 import Login from '../imports/ui/Login';
-import Links from '../imports/ui/Links';
 import Signup from '../imports/ui/Signup';
 import NotFound from '../imports/ui/NotFound';
+import Links from '../imports/ui/Links';
 
-const browserHistory = createHistory();
-const unauthenticatedPages = ['/', '/signup'];
-const authenticatedPages = ['/links'];
-
-const ChangeTracker = withRouter(({ match, location, history }) => {
-  const isAuthenticated = !!Meteor.userId();
-  const isUnauthenticatedPage = unauthenticatedPages.includes(location.pathname);
-  const isAuthenticatedPage = authenticatedPages.includes(location.pathname);
-
-  if (!isAuthenticated && isAuthenticatedPage) {
-    return <Redirect to={{ pathname: '/' }} />;
-  } else if (isAuthenticated && isUnauthenticatedPage) {
-    // Routing users to the fun pages with the content. don't need to sign up or log in, if they're already logged in
-    return <Redirect to={{ pathname: '/links' }} />;
+const authenticate = (nextState, replace) => {
+  if (!Meteor.loggingIn() && !Meteor.userId()) {
+    replace({
+      pathname: '/login',
+      state: { nextPathname: nextState.location.pathname },
+    });
   }
-  return null;
-});
-
-class AuthenticatedRoute extends React.Component {
-  render() {
-    const isAuthenticated = !!Meteor.userId();
-    const { component: Component, ...rest } = this.props;
-
-    return (
-      <Route
-        {...rest}
-        render={props =>
-          isAuthenticated
-            ? <Component {...props} />
-            : <Redirect to={{ pathname: '/', state: { from: props.location } }} />}
-      />
-    );
-  }
-}
-
-const routes = (
-  <Router history={browserHistory}>
-    <div>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        <AuthenticatedRoute path="/links" component={Links} />
-        <Route component={NotFound} />
-      </Switch>
-      <ChangeTracker />
-    </div>
-  </Router>
-);
+};
 
 Meteor.startup(() => {
-  ReactDOM.render(routes, document.getElementById('app'));
+  // render(
+  //   <BrowserRouter>
+  //     <Switch>
+  //       <Route name="login" exact path="/" component={Login} />
+  //       <Route name="signup" path="/signup" component={Signup} />
+  //       <Authenticated exact path="/links" component={Links} {...appProps} />
+  //       {/* <Route name="links" path="/links" component={Links} /> */}
+  //       <Route path="*" component={NotFound} />
+  //     </Switch>
+  //   </BrowserRouter>,
+  //   document.getElementById('app'),
+  // );
+
+  render(<Routes />, document.getElementById('app'));
 });
