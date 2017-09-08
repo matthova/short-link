@@ -1,59 +1,42 @@
-/* global document */
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 import React from 'react';
-import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { compose } from 'react-komposer';
+import PropTypes from 'prop-types';
 
 import Login from '../ui/Login';
 import Links from '../ui/Links';
 import Signup from '../ui/Signup';
 import NotFound from '../ui/NotFound';
+import AuthenticatedRoute from './AuthenticatedRoute';
+import NewUserOnlyRoute from './NewUserOnlyRoute';
 
-class AuthenticatedRoute extends React.Component {
-  render() {
-    const isAuthenticated = !!Meteor.userId();
-    const { component: Component, ...rest } = this.props;
+const Routes = (props) => {
+  const Router = BrowserRouter;
+  const routes = (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <NewUserOnlyRoute exact path="/signup" {...props} foo={'bar'} component={Signup} />
+        <AuthenticatedRoute exact path="/links" {...props} foo={'bar'} component={Links} />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
+  );
 
-    return (
-      <Route
-        {...rest}
-        render={props =>
-          isAuthenticated
-            ? <Component {...props} />
-            : <Redirect to={{ pathname: '/', state: { from: props.location } }} />}
-      />
-    );
-  }
-}
+  routes.propTypes = {
+    loggingIn: PropTypes.bool.isRequired,
+    authenticated: PropTypes.bool.isRequired,
+  };
 
-class Routes extends React.Component {
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/signup" component={Signup} />
-          <AuthenticatedRoute path="/links" component={Links} />
-          <Route component={NotFound} />
-        </Switch>
-      </Router>
-    );
-  }
-}
-
-Routes.propTypes = {
-  loggingIn: PropTypes.bool,
-  authenticated: PropTypes.bool,
+  return routes;
 };
 
 const composer = (props, onData) => {
   const loggingIn = Meteor.loggingIn();
-  onData(null, {
-    loggingIn,
-    authenticated: !loggingIn && !!Meteor.userId(),
-  });
+  const authenticated = !loggingIn && !!Meteor.userId();
+  onData(null, { loggingIn, authenticated });
 };
 
 const getTrackerLoader = reactiveMapper => (props, onData, env) => {

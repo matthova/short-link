@@ -34,11 +34,7 @@ export default class Login extends React.Component {
     return (
       <div>
         <h1>Login to Short Link</h1>
-        {this.state.error
-          ? <p>
-            {this.state.error}
-          </p>
-          : null}
+        {this.state.error ? <p>{this.state.error}</p> : null}
         <form onSubmit={this.onSubmit}>
           <input
             type="email"
@@ -59,7 +55,7 @@ export default class Login extends React.Component {
           <button>Login</button>
         </form>
 
-        <NavLink to="/signup">Have an account?</NavLink>
+        <NavLink to="/signup">or Signup Here</NavLink>
       </div>
     );
   }
