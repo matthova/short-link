@@ -1,7 +1,7 @@
+import { Accounts } from 'meteor/accounts-base';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Redirect } from 'react-router-dom';
-import { Accounts } from 'meteor/accounts-base';
 import autobind from 'react-autobind';
 
 export default class Links extends React.Component {
@@ -33,7 +33,3 @@ export default class Links extends React.Component {
     );
   }
 }
-
-Links.propTypes = {
-  history: ReactRouterPropTypes.history,
-};

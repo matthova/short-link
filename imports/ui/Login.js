@@ -1,8 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { NavLink, Redirect } from 'react-router-dom';
 import autobind from 'react-autobind';
-import { Meteor } from 'meteor/meteor';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -26,7 +25,6 @@ export default class Login extends React.Component {
         this.setState({ error: err.reason });
       } else {
         this.setState({ error: '', login: true });
-        // this.props.history.push('/links');
       }
     });
   }
@@ -65,7 +63,3 @@ export default class Login extends React.Component {
     );
   }
 }
-
-Login.propTypes = {
-  history: ReactRouterPropTypes.history.isRequired,
-};

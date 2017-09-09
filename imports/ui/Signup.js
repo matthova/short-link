@@ -1,7 +1,7 @@
+import { Accounts } from 'meteor/accounts-base';
 import React from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
 import autobind from 'react-autobind';
-import { Accounts } from 'meteor/accounts-base';
 
 export default class Signup extends React.Component {
   constructor(props) {
@@ -31,7 +31,6 @@ export default class Signup extends React.Component {
 
   render() {
     if (this.state.signupSuccess) {
-      console.log('redirect');
       return <Redirect to="/links" />;
     }
 
@@ -39,11 +38,7 @@ export default class Signup extends React.Component {
       <div>
         <p>Join Short Link</p>
 
-        {this.state.error
-          ? <p>
-            {this.state.error}
-          </p>
-          : null}
+        {this.state.error ? <p>{this.state.error}</p> : null}
 
         <form onSubmit={this.onSubmit}>
           <input
