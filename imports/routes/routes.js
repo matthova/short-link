@@ -18,8 +18,8 @@ const Routes = (props) => {
     <Router>
       <Switch>
         <Route exact path="/" component={Login} />
-        <NewUserOnlyRoute exact path="/signup" {...props} foo={'bar'} component={Signup} />
-        <AuthenticatedRoute exact path="/links" {...props} foo={'bar'} component={Links} />
+        <NewUserOnlyRoute exact path="/signup" component={Signup} {...props} />
+        <AuthenticatedRoute exact path="/links" component={Links} {...props} />
         <Route component={NotFound} />
       </Switch>
     </Router>

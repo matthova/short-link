@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import autobind from 'react-autobind';
 import { Meteor } from 'meteor/meteor';
 
@@ -9,6 +9,7 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
       error: '',
+      login: false,
     };
 
     autobind(this);
@@ -24,13 +25,17 @@ export default class Login extends React.Component {
       if (err) {
         this.setState({ error: err.reason });
       } else {
-        this.setState({ error: '' });
-        this.props.history.push('/links');
+        this.setState({ error: '', login: true });
+        // this.props.history.push('/links');
       }
     });
   }
 
   render() {
+    if (this.state.login) {
+      return <Redirect to={{ pathname: '/links' }} />;
+    }
+
     return (
       <div>
         <h1>Login to Short Link</h1>
