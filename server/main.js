@@ -24,28 +24,4 @@ Meteor.startup(() => {
     hourlyWage: 1,
     email: 'me@me.com',
   });
-
-  // const petSchema = new SimpleSchema({
-  //   name: {
-  //     type: String,
-  //     min: 1,
-  //     max: 200,
-  //     optional: true,
-  //   },
-  //   age: {
-  //     type: Number,
-  //     min: 0,
-  //   },
-  //   contactNumber: {
-  //     type: String,
-  //     optional: true,
-  //     regEx: SimpleSchema.RegEx.Phone,
-  //   },
-  // });
-
-  // petSchema.validate({
-  //   name: 'foofy',
-  //   age: 0,
-  //   contactNumber: '402-867-5309',
-  // });
 });
