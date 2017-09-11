@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import autobind from 'react-autobind';
 
 import { Links } from '../api/links';
+
 import LinksList from './LinksList';
 
 export default class Link extends React.Component {
