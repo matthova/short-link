@@ -6,7 +6,7 @@ import { compose } from 'react-komposer';
 import PropTypes from 'prop-types';
 
 import Login from '../ui/Login';
-import Links from '../ui/Links';
+import Link from '../ui/Link';
 import Signup from '../ui/Signup';
 import NotFound from '../ui/NotFound';
 import AuthenticatedRoute from './AuthenticatedRoute';
@@ -17,9 +17,9 @@ const Routes = (props) => {
   const routes = (
     <Router>
       <Switch>
-        <Route exact path="/" component={Login} />
+        <NewUserOnlyRoute exact path="/" component={Login} {...props} />
         <NewUserOnlyRoute exact path="/signup" component={Signup} {...props} />
-        <AuthenticatedRoute exact path="/links" component={Links} {...props} />
+        <AuthenticatedRoute exact path="/links" component={Link} {...props} />
         <Route component={NotFound} />
       </Switch>
     </Router>
