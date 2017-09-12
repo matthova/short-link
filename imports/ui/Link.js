@@ -13,6 +13,15 @@ export default class Link extends React.Component {
   deleteLink(e) {
     e.preventDefault();
 
+    Meteor.call('removeLink', this.props, (error, response) => {
+      if (error) {
+        // Same convention as above with errors :)
+        alert(error.reason);
+      } else {
+        // If you're doing synchronous work on the server, you can get a result here.
+      }
+    });
+
     // Add logic here for deleting the link object from the database
   }
 
