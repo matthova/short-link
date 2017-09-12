@@ -4,6 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import Routes from '../imports/routes/routes';
+import '../imports/startup/simple-schema-configuration';
 
 Meteor.startup(() => {
   render(<Routes />, document.getElementById('app'));

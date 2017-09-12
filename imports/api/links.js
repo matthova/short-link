@@ -16,16 +16,13 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
-    try {
-      new SimpleSchema({
-        url: {
-          type: String,
-          regEx: SimpleSchema.RegEx.Url,
-        },
-      }).validate({ url });
-    } catch (ex) {
-      throw new Meteor.Error(400, ex.message);
-    }
+    new SimpleSchema({
+      url: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Url,
+        label: 'Your link',
+      },
+    }).validate({ url });
 
     Links.insert(
       {
