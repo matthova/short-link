@@ -13,7 +13,7 @@ export default class Link extends React.Component {
   deleteLink(e) {
     e.preventDefault();
 
-    Meteor.call('removeLink', this.props, (error, response) => {
+    Meteor.call('links.remove', this.props._id, (error, response) => {
       if (error) {
         // Same convention as above with errors :)
         alert(error.reason);
@@ -37,4 +37,5 @@ export default class Link extends React.Component {
 
 Link.propTypes = {
   url: PropTypes.string.isRequired,
+  _id: PropTypes.string.isRequired,
 };
