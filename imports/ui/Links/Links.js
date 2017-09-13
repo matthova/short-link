@@ -23,7 +23,10 @@ export default class LinksList extends React.Component {
   }
 
   renderLinksListItems() {
-    return this.state.links.map(link => <Link key={link._id} {...link} />);
+    return this.state.links.map((link) => {
+      const shortUrl = Meteor.absoluteUrl(link._id);
+      return <Link key={link._id} shortUrl={shortUrl} {...link} />;
+    });
   }
 
   render() {
