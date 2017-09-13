@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { NavLink, Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import autobind from 'react-autobind';
 
 export default class Login extends React.Component {
@@ -8,7 +8,6 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
       error: '',
-      login: false,
     };
 
     autobind(this);
@@ -23,17 +22,11 @@ export default class Login extends React.Component {
     Meteor.loginWithPassword({ email }, password, (err) => {
       if (err) {
         this.setState({ error: err.reason });
-      } else {
-        this.setState({ error: '', login: true });
       }
     });
   }
 
   render() {
-    if (this.state.login) {
-      return <Redirect to={{ pathname: '/links' }} />;
-    }
-
     return (
       <div>
         <h1>Login to Short Link</h1>

@@ -6,7 +6,7 @@ import { compose } from 'react-komposer';
 import PropTypes from 'prop-types';
 
 import Login from '../ui/Login';
-import LinkHeader from '../ui/LinkHeader';
+import LinkArea from '../ui/Links/LinkArea';
 import Signup from '../ui/Signup';
 import NotFound from '../ui/NotFound';
 import AuthenticatedRoute from './AuthenticatedRoute';
@@ -19,7 +19,7 @@ const Routes = (props) => {
       <Switch>
         <NewUserOnlyRoute exact path="/" component={Login} {...props} />
         <NewUserOnlyRoute exact path="/signup" component={Signup} {...props} />
-        <AuthenticatedRoute exact path="/links" component={LinkHeader} {...props} />
+        <AuthenticatedRoute exact path="/links" component={LinkArea} {...props} />
         <Route component={NotFound} />
       </Switch>
     </Router>

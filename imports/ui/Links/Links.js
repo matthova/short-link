@@ -2,7 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
-import { Links } from '../api/links';
+import { Links } from '../../api/links';
 import Link from './Link';
 
 export default class LinksList extends React.Component {
@@ -20,10 +20,6 @@ export default class LinksList extends React.Component {
       const links = Links.find().fetch();
       this.setState({ links });
     });
-  }
-
-  componentWillUnmount() {
-    console.log('component links list will unmount');
   }
 
   renderLinksListItems() {
