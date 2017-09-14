@@ -47,4 +47,8 @@ Meteor.methods({
       }
     });
   },
+  'links.toggleVisiblity': function (linkId) {
+    const link = Links.findOne({ _id: linkId });
+    Links.update({ _id: linkId }, { $set: { visible: !link.visible } });
+  },
 });

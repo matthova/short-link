@@ -17,13 +17,13 @@ export default class Link extends React.Component {
 
   componentDidMount() {
     this.clipboard = new Clipboard(this.copyButton);
-    clipboard.on('success', () => {
+    this.clipboard.on('success', () => {
       this.setState({ copyState: 'Copied' });
       setTimeout(() => {
         this.setState({ copyState: 'Copy' });
       }, 500);
     });
-    clipboard.on('error', () => {
+    this.clipboard.on('error', () => {
       alert('Unable to copy. Please manually copy the link');
     });
   }
@@ -47,6 +47,17 @@ export default class Link extends React.Component {
     // Add logic here for deleting the link object from the database
   }
 
+  toggleVisible(e) {
+    e.preventDefault();
+
+    Meteor.call('links.toggleVisiblity', this.props._id, (error, response) => {
+      if (error) {
+        alert(error.reason);
+      } else {
+      }
+    });
+  }
+
   render() {
     return (
       <div>
@@ -60,6 +71,10 @@ export default class Link extends React.Component {
         >
           {this.state.copyState}
         </button>
+        <div>
+          <p>Visible: {this.props.visible.toString()}</p>
+          <button onClick={this.toggleVisible}>Toggle Visible</button>
+        </div>
         <button onClick={this.deleteLink}>x</button>
       </div>
     );
@@ -70,5 +85,6 @@ Link.propTypes = {
   url: PropTypes.string.isRequired,
   _id: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
+  visible: PropTypes.bool.isRequired,
   shortUrl: PropTypes.string.isRequired,
 };
