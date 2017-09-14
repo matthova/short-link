@@ -47,8 +47,21 @@ Meteor.methods({
       }
     });
   },
-  'links.toggleVisiblity': function (linkId) {
-    const link = Links.findOne({ _id: linkId });
-    Links.update({ _id: linkId }, { $set: { visible: !link.visible } });
+  'links.toggleVisiblity': function (linkId, visibleGoal) {
+    if (!this.userId) {
+      throw new Meteor.error('Cannot toggle visibility of someone elses id');
+    }
+
+    new SimpleSchema({
+      linkId: {
+        type: String,
+        min: 1,
+      },
+      visibleGoal: {
+        type: Boolean,
+      },
+    }).validate({ linkId, visibleGoal });
+
+    Links.update({ _id: linkId }, { $set: { visible: visibleGoal } }, (error, result) => {});
   },
 });

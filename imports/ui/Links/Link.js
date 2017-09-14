@@ -50,7 +50,7 @@ export default class Link extends React.Component {
   toggleVisible(e) {
     e.preventDefault();
 
-    Meteor.call('links.toggleVisiblity', this.props._id, (error, response) => {
+    Meteor.call('links.toggleVisiblity', this.props._id, !this.props.visible, (error, response) => {
       if (error) {
         alert(error.reason);
       } else {
