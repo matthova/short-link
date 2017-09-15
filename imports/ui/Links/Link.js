@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import autobind from 'react-autobind';
 import Clipboard from 'clipboard';
+import moment from 'moment';
 
 export default class Link extends React.Component {
   constructor(props) {
@@ -58,15 +59,23 @@ export default class Link extends React.Component {
     });
   }
 
+  renderStats() {
+    let visitMessage = this.props.visitedCount === 1 ? 'visit' : 'visits';
+
+    if (typeof this.props.lastVisitedAt === 'number') {
+      visitMessage += ` - (visited ${moment(this.props.lastVisitedAt).fromNow()})`;
+    }
+
+    return `${this.props.visitedCount} ${visitMessage}`;
+  }
+
   render() {
     return (
       <div>
         <p>{this.props.url}</p>
         <p>{this.props.shortUrl}</p>
         <p>{this.props.visible.toString()}</p>
-        <p>
-          {this.props.visitedCount} - {this.props.lastVisitedAt}
-        </p>
+        <p>{this.renderStats()}</p>
         <button
           ref={(copyButton) => {
             this.copyButton = copyButton;
