@@ -30,6 +30,7 @@ Meteor.methods({
         _id: shortid.generate(),
         url,
         userId: this.userId,
+        visible: true,
       },
       (error, response) => {
         if (error) {
@@ -49,7 +50,7 @@ Meteor.methods({
   },
   'links.toggleVisiblity': function (linkId, visibleGoal) {
     if (!this.userId) {
-      throw new Meteor.error('Cannot toggle visibility of someone elses id');
+      throw new Meteor.error('Cannot toggle "visible" for someone elses id');
     }
 
     new SimpleSchema({
