@@ -76,6 +76,9 @@ export default class Link extends React.Component {
         <p>{this.props.shortUrl}</p>
         <p>{this.props.visible.toString()}</p>
         <p>{this.renderStats()}</p>
+        <a href={this.props.shortUrl} target="_blank">
+          Visit Url
+        </a>
         <button
           ref={(copyButton) => {
             this.copyButton = copyButton;

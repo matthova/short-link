@@ -8,8 +8,8 @@ import LinkFilters from './LinkFilters';
 export default () => (
   <div>
     <PrivateHeader title="Links" />
-    <AddLink />
     <LinkFilters />
+    <AddLink />
     <Links />
   </div>
 );

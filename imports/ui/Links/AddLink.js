@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import autobind from 'react-autobind';
+import Modal from 'react-modal';
 
 export default class AddLink extends React.Component {
   constructor(props) {
@@ -8,6 +9,8 @@ export default class AddLink extends React.Component {
 
     this.state = {
       url: '',
+      isOpen: false,
+      error: '',
     };
 
     autobind(this);
@@ -18,15 +21,13 @@ export default class AddLink extends React.Component {
 
     const { url } = this.state;
 
-    if (url) {
-      Meteor.call('links.insert', url, (error, response) => {
-        if (error) {
-          console.error(error);
-        } else {
-          this.setState({ url: '' });
-        }
-      });
-    }
+    Meteor.call('links.insert', url, (error, response) => {
+      if (error) {
+        this.setState({ error: error.reason });
+      } else {
+        this.closeModal();
+      }
+    });
   }
 
   onUrlChange(e) {
@@ -35,12 +36,43 @@ export default class AddLink extends React.Component {
     });
   }
 
+  closeModal() {
+    this.setState({ isOpen: false, error: '', url: '' });
+  }
+
   render() {
     return (
-      <form onSubmit={this.createLink}>
-        <input type="text" placeholder="URL" value={this.state.url} onChange={this.onUrlChange} />
-        <input type="submit" value="Add Link" />
-      </form>
+      <div>
+        <button
+          onClick={() => {
+            this.setState({ isOpen: true });
+          }}
+        >
+          + Add Link{' '}
+        </button>
+        <Modal
+          onAfterOpen={() => {
+            this.url.focus();
+          }}
+          onRequestClose={this.closeModal}
+          isOpen={this.state.isOpen}
+          contentLabel="Add link"
+        >
+          <h1>Add Link</h1>
+          {this.state.error ? <p>{this.state.error}</p> : null}
+          <form onSubmit={this.createLink}>
+            <input
+              type="text"
+              placeholder="URL"
+              value={this.state.url}
+              onChange={this.onUrlChange}
+              ref={url => (this.url = url)}
+            />
+            <input type="submit" value="Add Link" />
+          </form>
+          <button onClick={this.closeModal}>Close Modal</button>
+        </Modal>
+      </div>
     );
   }
 }
