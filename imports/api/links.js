@@ -31,6 +31,8 @@ Meteor.methods({
         url,
         userId: this.userId,
         visible: true,
+        visitedCount: 0,
+        lastVisitedAt: null,
       },
       (error, response) => {
         if (error) {
@@ -64,5 +66,24 @@ Meteor.methods({
     }).validate({ linkId, visibleGoal });
 
     Links.update({ _id: linkId }, { $set: { visible: visibleGoal } }, (error, result) => {});
+  },
+  'links.trackVisit': function (_id) {
+    console.log('track visit!', _id);
+    new SimpleSchema({
+      _id: {
+        type: String,
+        min: 1,
+      },
+    }).validate({ _id });
+
+    Links.update(
+      { _id },
+      {
+        $set: { lastVisitedAt: new Date().getTime() },
+        $inc: {
+          visitedCount: 1,
+        },
+      },
+    );
   },
 });

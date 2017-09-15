@@ -61,8 +61,12 @@ export default class Link extends React.Component {
   render() {
     return (
       <div>
-        <p>Url: {this.props.url}</p>
-        <p>Short URL: {this.props.shortUrl}</p>
+        <p>{this.props.url}</p>
+        <p>{this.props.shortUrl}</p>
+        <p>{this.props.visible.toString()}</p>
+        <p>
+          {this.props.visitedCount} - {this.props.lastVisitedAt}
+        </p>
         <button
           ref={(copyButton) => {
             this.copyButton = copyButton;
@@ -72,8 +76,7 @@ export default class Link extends React.Component {
           {this.state.copyState}
         </button>
         <div>
-          <p>Visible: {this.props.visible.toString()}</p>
-          <button onClick={this.toggleVisible}>Toggle Visible</button>
+          <button onClick={this.toggleVisible}>{this.props.visible ? 'Hide' : 'Unhide'}</button>
         </div>
         <button onClick={this.deleteLink}>x</button>
       </div>
@@ -87,4 +90,6 @@ Link.propTypes = {
   userId: PropTypes.string.isRequired,
   visible: PropTypes.bool.isRequired,
   shortUrl: PropTypes.string.isRequired,
+  visitedCount: PropTypes.number.isRequired,
+  lastVisitedAt: PropTypes.number,
 };
