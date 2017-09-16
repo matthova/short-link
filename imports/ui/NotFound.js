@@ -6,8 +6,8 @@ const NotFound = () => (
     <div className="boxed-view__box">
       <h1>Page Not Found</h1>
       <p>Hmmm, we're unable to find that page.</p>
-      <NavLink to="/">
-        <button>Head Home</button>
+      <NavLink className="button button--link" to="/">
+        Head Home
       </NavLink>
     </div>
   </div>

@@ -49,7 +49,7 @@ export default class Login extends React.Component {
               name="password"
               placeholder="Password"
             />
-            <button>Login</button>
+            <button className="button">Login</button>
           </form>
 
           <NavLink to="/signup">or Signup Here</NavLink>

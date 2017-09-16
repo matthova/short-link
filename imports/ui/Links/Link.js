@@ -33,21 +33,6 @@ export default class Link extends React.Component {
     this.clipboard.destroy();
   }
 
-  deleteLink(e) {
-    e.preventDefault();
-
-    Meteor.call('links.remove', this.props._id, (error, response) => {
-      if (error) {
-        // Same convention as above with errors :)
-        alert(error.reason);
-      } else {
-        // If you're doing synchronous work on the server, you can get a result here.
-      }
-    });
-
-    // Add logic here for deleting the link object from the database
-  }
-
   toggleVisible(e) {
     e.preventDefault();
 
@@ -77,9 +62,10 @@ export default class Link extends React.Component {
         <p>{this.props.visible.toString()}</p>
         <p>{this.renderStats()}</p>
         <a href={this.props.shortUrl} target="_blank">
-          Visit Url
+          <button className="button button--pill">Visit</button>
         </a>
         <button
+          className="button button--pill"
           ref={(copyButton) => {
             this.copyButton = copyButton;
           }}
@@ -87,10 +73,9 @@ export default class Link extends React.Component {
         >
           {this.state.copyState}
         </button>
-        <div>
-          <button onClick={this.toggleVisible}>{this.props.visible ? 'Hide' : 'Unhide'}</button>
-        </div>
-        <button onClick={this.deleteLink}>x</button>
+        <button className="button button--pill" onClick={this.toggleVisible}>
+          {this.props.visible ? 'Hide' : 'Unhide'}
+        </button>
       </div>
     );
   }
