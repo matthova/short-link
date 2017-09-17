@@ -7,9 +7,11 @@ import LinkFilters from './LinkFilters';
 
 export default () => (
   <div>
-    <PrivateHeader title="Links" />
-    <LinkFilters />
-    <AddLink />
-    <Links />
+    <PrivateHeader title="Short Link" />
+    <div className="page-content">
+      <LinkFilters />
+      <AddLink />
+      <Links />
+    </div>
   </div>
 );

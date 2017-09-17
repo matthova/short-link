@@ -56,11 +56,10 @@ export default class Link extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>{this.props.url}</p>
-        <p>{this.props.shortUrl}</p>
-        <p>{this.props.visible.toString()}</p>
-        <p>{this.renderStats()}</p>
+      <div className="item">
+        <h2>{this.props.url}</h2>
+        <p className="item__message">{this.props.shortUrl}</p>
+        <p className="item__message">{this.renderStats()}</p>
         <a href={this.props.shortUrl} target="_blank">
           <button className="button button--pill">Visit</button>
         </a>
