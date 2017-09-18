@@ -33,5 +33,8 @@
     "eslint-plugin-react": "^7.1.0",
     "meteor-desktop": "^0.8.0",
     "prettier": "^1.5.3"
+  },
+  "engines": {
+    "node": "4.8.4"
   }
 }
