@@ -21,7 +21,12 @@ export default class LinksList extends React.Component {
       const links = Links.find({
         visible: Session.get('showVisible'),
       }).fetch();
-      this.setState({ links });
+
+      // When a new link is created
+      // optimistic loading momentarily creates the illusion that 2 links are created
+      // TODO To deal with this, wait for _ milliseconds before updating links
+      // If new links arrive before the time is up, repeat the check
+      this.setState({ links, updating: false });
     });
   }
 
