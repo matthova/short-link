@@ -1,9 +1,22 @@
 import { Meteor } from 'meteor/meteor';
 import { WebApp } from 'meteor/webapp';
+import { ServiceConfiguration } from 'meteor/service-configuration';
 
 import '../imports/api/users';
 import { Links } from '../imports/api/links';
 import '../imports/startup/simple-schema-configuration';
+
+ServiceConfiguration.configurations.remove({
+  service: 'facebook',
+});
+
+console.log('process env', process.env);
+
+ServiceConfiguration.configurations.insert({
+  service: 'facebook',
+  secret: process.env.FB_SECRET,
+  appId: process.env.FB_APP_ID,
+});
 
 Meteor.startup(() => {
   WebApp.connectHandlers.use((req, res, next) => {

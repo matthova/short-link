@@ -50,6 +50,22 @@ export default class Login extends React.Component {
               placeholder="Password"
             />
             <button className="button">Login</button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                Meteor.loginWithFacebook(
+                  { requestPermissions: ['public_profile', 'email'] },
+                  (err) => {
+                    if (err) {
+                      console.log('Handle errors here: ', err);
+                    }
+                  },
+                );
+              }}
+              className="button"
+            >
+              Login with Facebook
+            </button>
           </form>
 
           <NavLink to="/signup">or Signup Here</NavLink>
