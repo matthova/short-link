@@ -10,8 +10,11 @@ export default class LinksList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.updateDelay = 10;
+
     this.state = {
       links: [],
+      lastUpdated: new Date().getTime(),
     };
   }
 
@@ -24,9 +27,16 @@ export default class LinksList extends React.Component {
 
       // When a new link is created
       // optimistic loading momentarily creates the illusion that 2 links are created
-      // TODO To deal with this, wait for _ milliseconds before updating links
-      // If new links arrive before the time is up, repeat the check
-      this.setState({ links, updating: false });
+      // To deal with this, we compare the current time with the time that the new links were provided
+      // If an update happens prior to the timeout function being called, then the state will be updated by the later callback
+      setTimeout(() => {
+        const currentTime = new Date().getTime();
+        if (currentTime - this.state.lastUpdated >= this.updateDelay) {
+          this.setState({ links });
+        }
+      }, this.updateDelay);
+
+      this.setState({ lastUpdated: new Date().getTime() });
     });
   }
 
