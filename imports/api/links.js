@@ -68,7 +68,6 @@ Meteor.methods({
     Links.update({ _id: linkId }, { $set: { visible: visibleGoal } }, (error, result) => {});
   },
   'links.trackVisit': function (_id) {
-    console.log('track visit!', _id);
     new SimpleSchema({
       _id: {
         type: String,

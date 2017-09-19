@@ -66,6 +66,19 @@ export default class Login extends React.Component {
             >
               Login with Facebook
             </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                Meteor.loginWithGoogle({ requestPermissions: ['email'] }, (err) => {
+                  if (err) {
+                    console.log('Handle errors here: ', err);
+                  }
+                });
+              }}
+              className="button"
+            >
+              Login with Gmail
+            </button>
           </form>
 
           <NavLink to="/signup">or Signup Here</NavLink>

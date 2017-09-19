@@ -10,12 +10,20 @@ ServiceConfiguration.configurations.remove({
   service: 'facebook',
 });
 
-console.log('process env', process.env);
-
 ServiceConfiguration.configurations.insert({
   service: 'facebook',
   secret: process.env.FB_SECRET,
   appId: process.env.FB_APP_ID,
+});
+
+ServiceConfiguration.configurations.remove({
+  service: 'google',
+});
+
+ServiceConfiguration.configurations.insert({
+  service: 'google',
+  clientId: process.env.GOOGLE_APP_ID,
+  secret: process.env.GOOGLE_SECRET,
 });
 
 Meteor.startup(() => {
